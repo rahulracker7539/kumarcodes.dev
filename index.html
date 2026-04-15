@@ -4,575 +4,1139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rahul Kumar — kumarcodes.dev</title>
-<meta name="description" content="Rahul Kumar — Lead DevOps & Platform Engineer specialising in GCP, Kubernetes, Terraform, and AI/ML engineering. Based in London, UK.">
+<meta name="description" content="Rahul Kumar — Lead Platform Engineer specialising in GCP, Kubernetes, Terraform, and AI/ML engineering. Based in London, UK.">
 <meta name="keywords" content="Rahul Kumar, DevOps Engineer, GCP, Platform Engineering, Kubernetes, Terraform, AI ML Engineer, London, kumarcodes">
 <meta name="author" content="Rahul Kumar">
 <meta property="og:title" content="Rahul Kumar — Building infrastructure that thinks.">
-<meta property="og:description" content="Lead DevOps & Platform Engineer. GCP · Kubernetes · Terraform · AI/ML. Based in London, UK.">
+<meta property="og:description" content="Lead Platform Engineer. GCP · Kubernetes · Terraform · AI/ML. Based in London, UK.">
 <meta property="og:url" content="https://kumarcodes.dev">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rahul Kumar — kumarcodes.dev">
-<meta name="twitter:description" content="Lead DevOps & Platform Engineer. GCP · Kubernetes · Terraform · AI/ML. London, UK.">
+<meta name="twitter:description" content="Lead Platform Engineer. GCP · Kubernetes · Terraform · AI/ML. London, UK.">
 <link rel="canonical" href="https://kumarcodes.dev">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0c0f;
-    --bg2: #0f1218;
-    --bg3: #141820;
-    --border: rgba(100,255,180,0.12);
-    --border2: rgba(100,255,180,0.22);
-    --green: #00ff9d;
-    --green2: #00cc7a;
-    --green3: rgba(0,255,157,0.08);
-    --text: #e2e8f0;
-    --muted: #8892a4;
-    --dim: #4a5568;
-    --accent: #00ff9d;
-    --accent2: #64ffda;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Syne', sans-serif;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
+/* ============================================================
+   VARIABLES & RESET
+============================================================ */
+:root {
+  --bg:      #0a0c0f;
+  --bg2:     #0f1218;
+  --bg3:     #141820;
+  --bg4:     #1a1f2e;
+  --border:  rgba(0,255,157,0.10);
+  --border2: rgba(0,255,157,0.22);
+  --green:   #00ff9d;
+  --green2:  #00cc7a;
+  --green3:  rgba(0,255,157,0.07);
+  --green4:  rgba(0,255,157,0.15);
+  --text:    #e2e8f0;
+  --muted:   #8892a4;
+  --dim:     #4a5568;
+  --mono:    'JetBrains Mono', monospace;
+  --sans:    'Syne', sans-serif;
+  --radius:  8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
 
-  /* SCANLINE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,157,0.012) 2px, rgba(0,255,157,0.012) 4px);
-    pointer-events: none;
-    z-index: 9999;
-  }
+/* SCANLINE */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,157,0.010) 2px, rgba(0,255,157,0.010) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(10,12,15,0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 5vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--green);
-    letter-spacing: 0.05em;
-  }
-  .nav-logo span { color: var(--muted); }
-  .nav-links { display: flex; gap: 28px; }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--green); }
+/* SCROLL PROGRESS BAR */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--green2));
+  z-index: 9998;
+  width: 0%;
+  transition: width 0.1s linear;
+}
 
-  /* SECTIONS */
-  section { padding: 100px 5vw; max-width: 1100px; margin: 0 auto; }
+/* ============================================================
+   NAV
+============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(10,12,15,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--dim); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  padding: 4px 0;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: var(--green);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--green); }
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); }
 
-  /* HERO */
-  #hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 120px;
-    max-width: 100%;
-    padding-left: 5vw;
-    padding-right: 5vw;
-    position: relative;
-    overflow: hidden;
-  }
-  #hero::after {
-    content: '';
-    position: absolute;
-    top: 20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0,255,157,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-prompt {
-    color: var(--green);
-    font-size: 13px;
-    margin-bottom: 20px;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.2s;
-  }
-  .hero-prompt::before { content: '$ '; color: var(--dim); }
-  h1 {
-    font-family: var(--sans);
-    font-size: clamp(48px, 7vw, 88px);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: #fff;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.4s;
-  }
-  h1 .name-accent { color: var(--green); }
-  .hero-tagline {
-    font-family: var(--mono);
-    font-size: clamp(13px, 1.5vw, 16px);
-    color: var(--muted);
-    margin-top: 24px;
-    max-width: 580px;
-    line-height: 1.8;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.6s;
-  }
-  .hero-tagline .tag-green { color: var(--green2); }
-  .cursor {
-    display: inline-block;
-    width: 10px;
-    height: 18px;
-    background: var(--green);
-    margin-left: 4px;
-    vertical-align: middle;
-    animation: blink 1.1s step-end infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    margin-top: 48px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.8s;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 4px;
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-primary {
-    background: var(--green);
-    color: #000;
-    border: 1px solid var(--green);
-    font-weight: 700;
-  }
-  .btn-primary:hover { background: var(--green2); border-color: var(--green2); transform: translateY(-2px); }
-  .btn-outline {
-    background: transparent;
-    color: var(--green);
-    border: 1px solid var(--border2);
-  }
-  .btn-outline:hover { border-color: var(--green); background: var(--green3); transform: translateY(-2px); }
-  .hero-stats {
-    display: flex;
-    gap: 48px;
-    margin-top: 72px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 1.0s;
-    flex-wrap: wrap;
-  }
-  .stat-item {}
-  .stat-num {
-    font-family: var(--sans);
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--green);
-  }
-  .stat-label { font-size: 11px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--green) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: all 0.2s !important;
+}
+.nav-resume:hover { background: var(--green3); border-color: var(--green) !important; }
+.nav-resume::after { display: none !important; }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--muted);
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--green); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--green); }
 
-  /* SECTION HEADERS */
-  .section-header {
-    margin-bottom: 56px;
-  }
-  .section-eyebrow {
-    font-size: 11px;
-    color: var(--green);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .section-eyebrow::before { content: '// '; color: var(--dim); }
-  h2 {
-    font-family: var(--sans);
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -0.02em;
-  }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 57px; left: 0; right: 0;
+  background: rgba(10,12,15,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 5vw;
+  z-index: 190;
+  flex-direction: column;
+  gap: 20px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--green); }
 
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-  .about-text p {
-    color: var(--muted);
-    line-height: 1.9;
-    margin-bottom: 16px;
-    font-size: 14px;
-  }
-  .about-text p strong { color: var(--text); }
-  .about-terminal {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .terminal-bar {
-    background: var(--bg3);
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot.r { background: #ff5f57; }
-  .dot.y { background: #febc2e; }
-  .dot.g { background: #28c840; }
-  .terminal-bar-title { margin-left: auto; margin-right: auto; font-size: 11px; color: var(--dim); letter-spacing: 0.05em; }
-  .terminal-body { padding: 20px 20px 24px; }
-  .tl { display: block; margin-bottom: 6px; font-size: 13px; }
-  .tl .p { color: var(--green); }
-  .tl .c { color: var(--dim); }
-  .tl .v { color: var(--accent2); }
-  .tl .s { color: #ffd080; }
-  .tl .arr { color: var(--muted); }
+/* ============================================================
+   SECTIONS LAYOUT
+============================================================ */
+section {
+  padding: 110px 5vw;
+  max-width: 1140px;
+  margin: 0 auto;
+}
 
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .skill-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    transition: border-color 0.2s, transform 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .skill-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--green);
-    transform: scaleX(0);
-    transition: transform 0.3s;
-    transform-origin: left;
-  }
-  .skill-card:hover::before { transform: scaleX(1); }
-  .skill-card:hover { border-color: var(--border2); transform: translateY(-3px); }
-  .skill-card-icon { font-size: 22px; margin-bottom: 12px; }
-  .skill-card-title { font-family: var(--sans); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px; }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 3px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    background: var(--bg3);
-    letter-spacing: 0.04em;
-    transition: all 0.15s;
-  }
-  .skill-card:hover .tag { border-color: rgba(0,255,157,0.2); color: var(--green2); }
+/* ============================================================
+   HERO
+============================================================ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 100px;
+  max-width: 100%;
+  padding-left: 6vw;
+  padding-right: 6vw;
+  position: relative;
+  overflow: hidden;
+}
 
-  /* EXPERIENCE */
-  .exp-timeline { position: relative; padding-left: 28px; }
-  .exp-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--green), transparent);
-  }
-  .exp-item {
-    position: relative;
-    margin-bottom: 48px;
-  }
-  .exp-item::before {
-    content: '';
-    position: absolute;
-    left: -32px;
-    top: 8px;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 8px var(--green);
-  }
-  .exp-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-  .exp-role { font-family: var(--sans); font-size: 17px; font-weight: 700; color: #fff; }
-  .exp-company { color: var(--green2); font-size: 13px; }
-  .exp-period {
-    margin-left: auto;
-    font-size: 11px;
-    color: var(--dim);
-    border: 1px solid var(--border);
-    padding: 3px 10px;
-    border-radius: 3px;
-    letter-spacing: 0.06em;
-  }
-  .exp-desc { color: var(--muted); line-height: 1.8; font-size: 13px; }
-  .exp-desc li { margin-bottom: 6px; list-style: none; padding-left: 16px; position: relative; }
-  .exp-desc li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 10px; top: 3px; }
+/* Grid background */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+/* Radial glow */
+#hero::after {
+  content: '';
+  position: absolute;
+  top: 15%; right: -5%;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(0,255,157,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
 
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  .project-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
-    transition: border-color 0.2s, transform 0.2s;
-    position: relative;
-  }
-  .project-card:hover { border-color: var(--border2); transform: translateY(-4px); }
-  .project-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 16px;
-  }
-  .project-icon { font-size: 24px; }
-  .project-links a {
-    font-size: 12px;
-    color: var(--dim);
-    text-decoration: none;
-    margin-left: 12px;
-    transition: color 0.2s;
-  }
-  .project-links a:hover { color: var(--green); }
-  .project-name { font-family: var(--sans); font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-  .project-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 18px; }
-  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
-  .stack-tag {
-    font-size: 11px;
-    color: var(--green2);
-    border: 1px solid rgba(0,204,122,0.25);
-    padding: 2px 8px;
-    border-radius: 3px;
-    background: rgba(0,204,122,0.05);
-  }
+.hero-prompt {
+  color: var(--green);
+  font-size: 12px;
+  margin-bottom: 24px;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-prompt::before { content: '$'; color: var(--dim); }
+.hero-prompt-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
-  /* CERTS */
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .cert-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 22px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: border-color 0.2s;
-  }
-  .cert-card:hover { border-color: var(--border2); }
-  .cert-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
-  .cert-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 4px; }
-  .cert-issuer { font-size: 11px; color: var(--dim); letter-spacing: 0.04em; }
-  .cert-badge {
-    margin-left: auto;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 2px;
-    flex-shrink: 0;
-    align-self: flex-start;
-    margin-top: 2px;
-  }
-  .cert-badge.active { background: rgba(0,255,157,0.1); color: var(--green2); border: 1px solid rgba(0,255,157,0.2); }
-  .cert-badge.progress { background: rgba(255,208,128,0.1); color: #ffd080; border: 1px solid rgba(255,208,128,0.2); }
+h1 {
+  font-family: var(--sans);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #fff;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.4s;
+}
+h1 .name-accent { color: var(--green); }
 
-  /* CONTACT */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-  .contact-text h3 { font-family: var(--sans); font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 16px; }
-  .contact-text p { color: var(--muted); line-height: 1.9; font-size: 14px; margin-bottom: 24px; }
-  .contact-links { display: flex; flex-direction: column; gap: 12px; }
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg2);
-    transition: all 0.2s;
-  }
-  .contact-link:hover { border-color: var(--border2); color: var(--green); background: var(--green3); }
-  .contact-link-icon { font-size: 16px; width: 20px; text-align: center; }
-  .contact-form {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .form-bar {
-    background: var(--bg3);
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-  .form-body { padding: 24px; }
-  .form-group { margin-bottom: 16px; }
-  .form-label { font-size: 11px; color: var(--green); margin-bottom: 6px; display: block; letter-spacing: 0.08em; }
-  .form-input, .form-textarea {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 10px 14px;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-    resize: none;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: var(--green2); }
-  .form-textarea { height: 90px; }
-  .form-submit {
-    width: 100%;
-    background: var(--green);
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    padding: 12px;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.06em;
-    transition: all 0.2s;
-  }
-  .form-submit:hover { background: var(--green2); transform: translateY(-1px); }
+.hero-tagline {
+  font-family: var(--mono);
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: var(--muted);
+  margin-top: 28px;
+  max-width: 620px;
+  line-height: 1.9;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.6s;
+}
+.hero-tagline .tag-green { color: var(--green2); font-weight: 500; }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 5vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .footer-copy { font-size: 12px; color: var(--dim); }
-  .footer-made { font-size: 12px; color: var(--dim); }
-  .footer-made span { color: var(--green); }
+.cursor {
+  display: inline-block;
+  width: 10px; height: 18px;
+  background: var(--green);
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blink 1.1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.8s;
+}
 
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-    .hero-stats { gap: 28px; }
-    nav { padding: 14px 20px; }
-    .nav-links { gap: 16px; }
-    .nav-links a { font-size: 11px; }
-    section { padding: 72px 20px; }
-    .exp-meta { flex-direction: column; align-items: flex-start; }
-    .exp-period { margin-left: 0; }
-  }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.btn-primary {
+  background: var(--green);
+  color: #000;
+  border: 1px solid var(--green);
+  font-weight: 700;
+}
+.btn-primary:hover { background: var(--green2); border-color: var(--green2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,255,157,0.2); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--border2);
+}
+.btn-outline:hover { border-color: var(--green); background: var(--green3); transform: translateY(-2px); }
+
+.hero-stats {
+  display: flex;
+  gap: 56px;
+  margin-top: 80px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 1.0s;
+  flex-wrap: wrap;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+  max-width: 560px;
+}
+.stat-num {
+  font-family: var(--sans);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label { font-size: 10px; color: var(--dim); letter-spacing: 0.12em; text-transform: uppercase; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   SECTION HEADERS
+============================================================ */
+.section-header { margin-bottom: 60px; }
+.section-eyebrow {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-eyebrow::before { content: '//'; color: var(--dim); }
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: var(--border2);
+}
+h2 {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   ABOUT
+============================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.about-text p {
+  color: var(--muted);
+  line-height: 1.95;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+.about-text p strong { color: var(--text); }
+.about-text .about-cta { margin-top: 32px; }
+
+.about-terminal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.terminal-bar {
+  background: var(--bg3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot.r { background: #ff5f57; }
+.dot.y { background: #febc2e; }
+.dot.g { background: #28c840; }
+.terminal-bar-title { margin: 0 auto; font-size: 11px; color: var(--dim); letter-spacing: 0.04em; }
+.terminal-body { padding: 22px 22px 28px; font-size: 12.5px; }
+.tl { display: block; margin-bottom: 5px; line-height: 1.6; }
+.tl .p  { color: var(--green); }
+.tl .c  { color: var(--dim); }
+.tl .v  { color: #79c0ff; }
+.tl .s  { color: #ffd080; }
+.tl .arr{ color: var(--muted); }
+.tl .k  { color: var(--green2); }
+
+/* ============================================================
+   SKILLS
+============================================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 18px;
+}
+.skill-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--green2));
+  transform: scaleX(0);
+  transition: transform 0.35s;
+  transform-origin: left;
+}
+.skill-card:hover::before { transform: scaleX(1); }
+.skill-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+.skill-card-icon { font-size: 24px; margin-bottom: 14px; }
+.skill-card-title { font-family: var(--sans); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: var(--bg3);
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+.skill-card:hover .tag { border-color: rgba(0,255,157,0.22); color: var(--green2); }
+
+/* ============================================================
+   EXPERIENCE
+============================================================ */
+.exp-timeline { position: relative; padding-left: 28px; }
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--green) 0%, var(--border) 100%);
+}
+.exp-item {
+  position: relative;
+  margin-bottom: 56px;
+}
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -32px; top: 10px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+.exp-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.exp-role { font-family: var(--sans); font-size: 18px; font-weight: 700; color: #fff; }
+.exp-company { color: var(--green2); font-size: 13px; }
+.exp-period {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+.exp-desc { color: var(--muted); line-height: 1.85; font-size: 13px; }
+.exp-desc li { margin-bottom: 8px; list-style: none; padding-left: 18px; position: relative; }
+.exp-desc li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 10px; top: 4px; }
+.exp-desc li strong { color: var(--green2); font-weight: 600; }
+
+/* ============================================================
+   PROJECTS
+============================================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.project-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+}
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.project-icon { font-size: 26px; }
+.project-links a {
+  font-size: 12px;
+  color: var(--dim);
+  text-decoration: none;
+  margin-left: 12px;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+.project-links a:hover { color: var(--green); }
+.project-name { font-family: var(--sans); font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.project-desc { color: var(--muted); font-size: 13px; line-height: 1.85; margin-bottom: 20px; flex: 1; }
+.project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.stack-tag {
+  font-size: 10px;
+  color: var(--green2);
+  border: 1px solid rgba(0,204,122,0.22);
+  padding: 2px 9px;
+  border-radius: 3px;
+  background: rgba(0,204,122,0.05);
+}
+
+/* ============================================================
+   CERTIFICATIONS
+============================================================ */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+.cert-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.cert-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.cert-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+.cert-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 4px; }
+.cert-issuer { font-size: 11px; color: var(--dim); letter-spacing: 0.04em; }
+.cert-badge {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 2px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+.cert-badge.active { background: rgba(0,255,157,0.08); color: var(--green2); border: 1px solid rgba(0,255,157,0.2); }
+.cert-badge.progress { background: rgba(255,208,128,0.08); color: #ffd080; border: 1px solid rgba(255,208,128,0.2); }
+
+/* ============================================================
+   BLOG
+============================================================ */
+#blog { background: transparent; }
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+}
+.blog-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.blog-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+}
+.blog-card-img {
+  height: 5px;
+  background: linear-gradient(90deg, var(--green), var(--green2), #00aaff);
+}
+.blog-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
+.blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.blog-tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,255,157,0.22);
+  color: var(--green2);
+  background: rgba(0,255,157,0.06);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.blog-date { font-size: 11px; color: var(--dim); }
+.blog-read-time { font-size: 11px; color: var(--dim); margin-left: auto; }
+.blog-title {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  transition: color 0.2s;
+}
+.blog-card:hover .blog-title { color: var(--green); }
+.blog-excerpt { color: var(--muted); font-size: 12.5px; line-height: 1.85; flex: 1; margin-bottom: 20px; }
+.blog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.blog-read-btn {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+.blog-card:hover .blog-read-btn { gap: 10px; }
+.blog-author { font-size: 11px; color: var(--dim); }
+
+/* BLOG MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  overflow-y: auto;
+  padding: 40px 20px;
+}
+.modal-overlay.open { display: flex; justify-content: center; align-items: flex-start; }
+.modal-box {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  max-width: 740px;
+  width: 100%;
+  overflow: hidden;
+  animation: modalIn 0.3s ease;
+  position: relative;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-header {
+  padding: 28px 32px 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 18px;
+  width: 34px; height: 34px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  line-height: 1;
+  font-family: var(--mono);
+}
+.modal-close:hover { border-color: var(--green); color: var(--green); }
+.modal-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.modal-title {
+  font-family: var(--sans);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  padding-right: 40px;
+}
+.modal-body {
+  padding: 32px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.95;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.modal-body::-webkit-scrollbar { width: 4px; }
+.modal-body::-webkit-scrollbar-track { background: var(--bg3); }
+.modal-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+.modal-body h3 {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin: 28px 0 12px;
+}
+.modal-body p { margin-bottom: 16px; }
+.modal-body strong { color: var(--text); }
+.modal-body code {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--green2);
+}
+.modal-body pre {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+.modal-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text);
+}
+.modal-body ul { padding-left: 0; }
+.modal-body ul li {
+  list-style: none;
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 8px;
+}
+.modal-body ul li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 10px; top: 4px; }
+.modal-body .highlight { color: var(--green2); font-weight: 600; }
+.modal-body blockquote {
+  border-left: 2px solid var(--green);
+  padding: 8px 18px;
+  margin: 18px 0;
+  background: var(--green3);
+  border-radius: 0 4px 4px 0;
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ============================================================
+   NEWSLETTER
+============================================================ */
+#newsletter {
+  padding: 80px 5vw;
+  max-width: 100%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,255,157,0.02) 50%, transparent 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.newsletter-inner {
+  max-width: 740px;
+  margin: 0 auto;
+  text-align: center;
+}
+.newsletter-eyebrow {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.newsletter-eyebrow::before { content: '// '; color: var(--dim); }
+.newsletter-title {
+  font-family: var(--sans);
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.newsletter-sub {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.85;
+  margin-bottom: 36px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.newsletter-input {
+  flex: 1;
+  min-width: 220px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 13px 18px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-input:focus { border-color: var(--green); }
+.newsletter-input::placeholder { color: var(--dim); }
+.newsletter-btn {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 13px 24px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.newsletter-btn:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,255,157,0.2); }
+.newsletter-note {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 16px;
+}
+.newsletter-features {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.nl-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.nl-feature::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+/* ============================================================
+   CONTACT
+============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.contact-text h3 { font-family: var(--sans); font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+.contact-text p { color: var(--muted); line-height: 1.95; font-size: 14px; margin-bottom: 28px; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; }
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 13px 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg2);
+  transition: all 0.2s;
+}
+.contact-link:hover { border-color: var(--border2); color: var(--green); background: var(--green3); transform: translateX(4px); }
+.contact-link-icon { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; }
+.contact-link-label { flex: 1; }
+.contact-link-arrow { color: var(--dim); font-size: 12px; transition: color 0.2s; }
+.contact-link:hover .contact-link-arrow { color: var(--green); }
+
+.contact-form {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.form-bar {
+  background: var(--bg3);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid var(--border);
+}
+.form-body { padding: 26px; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 10px; color: var(--green); margin-bottom: 6px; display: block; letter-spacing: 0.10em; text-transform: uppercase; }
+.form-input, .form-textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--green2); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--dim); }
+.form-textarea { height: 100px; }
+.form-submit {
+  width: 100%;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 13px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.07em;
+  transition: all 0.2s;
+}
+.form-submit:hover { background: var(--green2); transform: translateY(-1px); }
+.form-success {
+  text-align: center;
+  padding: 20px;
+  color: var(--green2);
+  font-size: 13px;
+  display: none;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.footer-copy { font-size: 12px; color: var(--dim); }
+.footer-copy a { color: var(--green); text-decoration: none; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a {
+  font-size: 11px;
+  color: var(--dim);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--green); }
+.footer-made { font-size: 12px; color: var(--dim); }
+.footer-made span { color: var(--green); }
+
+/* BACK TO TOP */
+#back-to-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 40px; height: 40px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--green);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+#back-to-top.visible { opacity: 1; transform: translateY(0); }
+#back-to-top:hover { background: var(--green3); border-color: var(--green); }
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 900px) {
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 80px 20px; }
+  #hero { padding-left: 20px; padding-right: 20px; }
+  .hero-stats { gap: 28px; }
+  .exp-meta { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .exp-period { margin-left: 0; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-input { min-width: 0; }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-links { justify-content: center; }
+  .modal-body { max-height: 60vh; }
+  .modal-header { padding: 22px 20px 18px; }
+  .modal-body { padding: 22px 20px; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 44px; }
+  .projects-grid, .blog-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-logo"><span>~/ </span>kumarcodes.dev</div>
+  <a href="#hero" class="nav-logo"><span>~/ </span>kumarcodes.dev</a>
   <div class="nav-links">
     <a href="#about">about</a>
     <a href="#skills">skills</a>
     <a href="#experience">exp</a>
     <a href="#projects">projects</a>
+    <a href="#blog">blog</a>
     <a href="#certifications">certs</a>
     <a href="#contact">contact</a>
+    <a href="cv-rahul-kumar.pdf" download class="nav-resume">⬇ Resume</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMobile()">about</a>
+  <a href="#skills" onclick="closeMobile()">skills</a>
+  <a href="#experience" onclick="closeMobile()">experience</a>
+  <a href="#projects" onclick="closeMobile()">projects</a>
+  <a href="#blog" onclick="closeMobile()">blog</a>
+  <a href="#certifications" onclick="closeMobile()">certifications</a>
+  <a href="#contact" onclick="closeMobile()">contact</a>
+  <a href="cv-rahul-kumar.pdf" download onclick="closeMobile()">⬇ Download Resume</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-prompt">whoami — cloud &amp; ai engineer, london</div>
+  <div class="hero-prompt">
+    <span class="hero-prompt-dot"></span>
+    whoami &mdash; platform &amp; ai engineer, london
+  </div>
   <h1>Rahul<br><span class="name-accent">Kumar</span></h1>
   <p class="hero-tagline">
     <span class="tag-green">Building infrastructure that thinks.</span><br>
-    Lead Platform Engineer · 4x GCP Certified · CKA · AI/ML Engineering —<br>
-    turning complex cloud infrastructure into elegant, scalable systems.<span class="cursor"></span>
+    Lead Platform Engineer &middot; 4× GCP Certified &middot; CKA &middot; GenAI Leader —<br>
+    turning complex cloud systems into elegant, scalable platforms.<span class="cursor"></span>
   </p>
   <div class="hero-cta">
-    <a href="#contact" class="btn btn-primary">&#x25B6; Get in touch</a>
-    <a href="#projects" class="btn btn-outline">&#x2022; View projects</a>
-    <a href="#" class="btn btn-outline">&#x2193; Resume.pdf</a>
+    <a href="#contact" class="btn btn-primary">&#x25B6;&nbsp; Get in touch</a>
+    <a href="#projects" class="btn btn-outline">&#x2022;&nbsp; View projects</a>
+    <a href="cv-rahul-kumar.pdf" download class="btn btn-outline">&#x2193;&nbsp; Resume.pdf</a>
   </div>
   <div class="hero-stats">
     <div class="stat-item">
@@ -580,16 +1144,16 @@
       <div class="stat-label">Years Experience</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">4x</div>
+      <div class="stat-num">4×</div>
       <div class="stat-label">GCP Certified</div>
     </div>
     <div class="stat-item">
       <div class="stat-num">$15k</div>
-      <div class="stat-label">Monthly Cost Saved</div>
+      <div class="stat-label">Monthly Saved</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">🇬🇧</div>
-      <div class="stat-label">London, UK</div>
+      <div class="stat-num">95%</div>
+      <div class="stat-label">Vuln Catch Rate</div>
     </div>
   </div>
 </section>
@@ -603,9 +1167,12 @@
   <div class="about-grid reveal">
     <div class="about-text">
       <p>I'm a <strong>Lead Platform Engineer</strong> based in London, currently at <strong>Rackspace Technology</strong>, with 10+ years building and scaling cloud infrastructure across GCP and AWS.</p>
-      <p>I lead the Internal Developer Platform (IDP) strategy — abstracting Kubernetes complexity for 6+ product teams, driving SRE adoption with SLOs and error budgets, and delivering real business impact: <strong>25% cloud compute cost reduction ($15k/month)</strong> and environment provisioning cut from <strong>3 days to 15 minutes</strong>.</p>
-      <p>I hold <strong>4x Google Cloud Professional certifications</strong> (Architect, DevOps, Security, Developer), a GenAI Leader badge, and CKA. I'm actively expanding into <strong>AI/ML engineering</strong> — building agent systems with Google ADK, Gemini Flash 2.5, and Vertex AI.</p>
+      <p>I lead the Internal Developer Platform (IDP) strategy — abstracting Kubernetes complexity for 6+ product teams, driving SRE adoption with SLOs and error budgets, and delivering real business impact: <strong>25% cloud compute cost reduction ($15k/month)</strong> and environment provisioning slashed from <strong>3 days to 15 minutes</strong>.</p>
+      <p>I hold <strong>4× Google Cloud Professional certifications</strong> (Architect, DevOps, Security, Developer), a GenAI Leader badge, and CKA. Currently deep into <strong>AI/ML engineering</strong> — building production agent systems with Google ADK, Gemini Flash 2.5, Vertex AI, and MCP Toolbox.</p>
       <p>Open to senior Platform Engineering, DevOps, and AI/ML Engineer roles. Remote or hybrid, London-based.</p>
+      <div class="about-cta">
+        <a href="cv-rahul-kumar.pdf" download class="btn btn-outline">&#x2193; Download Resume</a>
+      </div>
     </div>
     <div class="about-terminal">
       <div class="terminal-bar">
@@ -613,22 +1180,27 @@
         <span class="terminal-bar-title">rahul@cloud-box: ~</span>
       </div>
       <div class="terminal-body">
-        <span class="tl"><span class="p">$</span> <span class="v">cat</span> profile.json</span>
+        <span class="tl"><span class="p">$</span> <span class="k">cat</span> profile.json</span>
         <span class="tl"><span class="c">{</span></span>
         <span class="tl">&nbsp;&nbsp;<span class="s">"name"</span><span class="arr">:</span> <span class="v">"Rahul Kumar"</span>,</span>
         <span class="tl">&nbsp;&nbsp;<span class="s">"role"</span><span class="arr">:</span> <span class="v">"Lead Platform Engineer"</span>,</span>
         <span class="tl">&nbsp;&nbsp;<span class="s">"company"</span><span class="arr">:</span> <span class="v">"Rackspace Technology"</span>,</span>
-        <span class="tl">&nbsp;&nbsp;<span class="s">"experience"</span><span class="arr">:</span> <span class="v">"10+ years"</span>,</span>
-        <span class="tl">&nbsp;&nbsp;<span class="s">"certifications"</span><span class="arr">:</span> <span class="v">"4x GCP Pro + CKA + GenAI"</span>,</span>
-        <span class="tl">&nbsp;&nbsp;<span class="s">"impact"</span><span class="arr">:</span> [</span>
-        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"$15k/mo cost reduction"</span>,</span>
-        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"3 days → 15 min provisioning"</span>,</span>
-        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"95% vuln catch rate"</span></span>
-        <span class="tl">&nbsp;&nbsp;],</span>
         <span class="tl">&nbsp;&nbsp;<span class="s">"location"</span><span class="arr">:</span> <span class="v">"London, UK 🇬🇧"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;<span class="s">"experience"</span><span class="arr">:</span> <span class="v">"10+ years"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;<span class="s">"certifications"</span><span class="arr">:</span> <span class="v">"4x GCP + CKA + GenAI"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;<span class="s">"focus"</span><span class="arr">:</span> [</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"Platform Engineering"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"AI/ML Engineering"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">"Cloud Infrastructure"</span></span>
+        <span class="tl">&nbsp;&nbsp;],</span>
+        <span class="tl">&nbsp;&nbsp;<span class="s">"impact"</span><span class="arr">:</span> {</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"cost_reduction"</span><span class="arr">:</span> <span class="v">"$15k/mo"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"provisioning"</span><span class="arr">:</span> <span class="v">"3 days → 15 min"</span>,</span>
+        <span class="tl">&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"vuln_catch_rate"</span><span class="arr">:</span> <span class="v">"95%"</span></span>
+        <span class="tl">&nbsp;&nbsp;},</span>
         <span class="tl">&nbsp;&nbsp;<span class="s">"status"</span><span class="arr">:</span> <span class="v">"open_to_opportunities"</span></span>
         <span class="tl"><span class="c">}</span></span>
-        <span class="tl" style="margin-top:10px"><span class="p">$</span> <span class="cursor"></span></span>
+        <span class="tl" style="margin-top:12px"><span class="p">$</span> <span class="cursor"></span></span>
       </div>
     </div>
   </div>
@@ -676,7 +1248,7 @@
       <div class="skill-card-icon">🤖</div>
       <div class="skill-card-title">AI/ML Engineering</div>
       <div class="skill-tags">
-        <span class="tag">Vertex AI</span><span class="tag">Gemini API</span><span class="tag">Google ADK</span>
+        <span class="tag">Vertex AI</span><span class="tag">Gemini Flash 2.5</span><span class="tag">Google ADK</span>
         <span class="tag">BigQuery ML</span><span class="tag">MLflow</span><span class="tag">MCP Toolbox</span>
         <span class="tag">LangChain</span><span class="tag">Python</span>
       </div>
@@ -686,9 +1258,9 @@
       <div class="skill-card-icon">🛡️</div>
       <div class="skill-card-title">Security & Networking</div>
       <div class="skill-tags">
-        <span class="tag">Cloudflare</span><span class="tag">IAM</span><span class="tag">Secret Manager</span>
+        <span class="tag">Cloud SCC</span><span class="tag">IAM</span><span class="tag">Terrascan</span>
         <span class="tag">VPC SC</span><span class="tag">Zero Trust</span><span class="tag">RBAC</span>
-        <span class="tag">mTLS</span>
+        <span class="tag">mTLS</span><span class="tag">Cloudflare</span>
       </div>
     </div>
 
@@ -721,10 +1293,10 @@
       </div>
       <ul class="exp-desc">
         <li>Architected the Internal Developer Platform (IDP), abstracting Kubernetes complexity and providing self-service infrastructure primitives for 6+ product teams.</li>
-        <li>Drove SRE adoption across engineering — defined SLOs and error budgets for critical transactional flows, reducing unplanned downtime significantly.</li>
-        <li><strong style="color:#00cc7a">Cut cloud compute costs 25% ($15k/month)</strong> by optimising Kubernetes resource requests and limits across 50+ microservices.</li>
-        <li><strong style="color:#00cc7a">Reduced environment provisioning from 3 days to 15 minutes</strong> by building a modular Terraform library for standardised VPC and GKE provisioning.</li>
-        <li><strong style="color:#00cc7a">Achieved 95% critical vulnerability catch rate</strong> pre-deployment by integrating Cloud Security Command Center and Terrascan into CI/CD.</li>
+        <li>Drove SRE adoption across engineering — defined SLOs and error budgets for critical transactional flows, significantly reducing unplanned downtime.</li>
+        <li><strong>Cut cloud compute costs 25% ($15k/month)</strong> by optimising Kubernetes resource requests and limits across 50+ microservices.</li>
+        <li><strong>Reduced environment provisioning from 3 days to 15 minutes</strong> with a modular Terraform library for standardised VPC and GKE provisioning.</li>
+        <li><strong>Achieved 95% critical vulnerability catch rate</strong> pre-deployment by integrating Cloud SCC and Terrascan into CI/CD pipelines.</li>
         <li>Designed automated data pipelines for Staging/Dev environment hydration with PII masking for GDPR compliance.</li>
         <li>Implemented end-to-end APISIX API gateway for microservices traffic management, routing, and observability.</li>
         <li>Building AI agent systems using Google ADK, Gemini Flash 2.5, Vertex AI, BigQuery, and MCP Toolbox.</li>
@@ -742,7 +1314,7 @@
         <li>Built HTTP/HTTPS/TCP load balancers with backend services, SSL termination, and health checks.</li>
         <li>Configured IAM roles, permissions, and security policies enforcing least-privilege access across multi-tenant environments.</li>
         <li>Provisioned on-demand VMs, GKE clusters, Cloud SQL instances, and storage per customer requirements.</li>
-        <li>Set up VPN tunnels connecting on-premises and multi-cloud environments to GCP; maintained firewall rules and VPC configurations for network segmentation.</li>
+        <li>Set up VPN tunnels connecting on-premises and multi-cloud environments to GCP; maintained firewall rules and VPC configurations.</li>
       </ul>
     </div>
 
@@ -774,12 +1346,12 @@
     <div class="project-card reveal">
       <div class="project-card-header">
         <div class="project-icon">🤖</div>
-        <div class="project-links"><a href="#">↗ View</a></div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
       <div class="project-name">AI Agent System — Google ADK</div>
-      <div class="project-desc">Multi-agent orchestration system built with Google Agent Development Kit, Gemini Flash 2.5, BigQuery, and MCP Toolbox. Addresses token efficiency challenges at scale with large tool sets.</div>
+      <div class="project-desc">Multi-agent orchestration system built with Google Agent Development Kit, Gemini Flash 2.5, BigQuery, and MCP Toolbox. Addresses token efficiency challenges at scale with large tool sets in production environments.</div>
       <div class="project-stack">
-        <span class="stack-tag">Google ADK</span><span class="stack-tag">Gemini Flash</span>
+        <span class="stack-tag">Google ADK</span><span class="stack-tag">Gemini Flash 2.5</span>
         <span class="stack-tag">BigQuery</span><span class="stack-tag">MCP Toolbox</span><span class="stack-tag">Python</span>
       </div>
     </div>
@@ -787,10 +1359,10 @@
     <div class="project-card reveal">
       <div class="project-card-header">
         <div class="project-icon">🧠</div>
-        <div class="project-links"><a href="#">↗ View</a></div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
       <div class="project-name">Personal Knowledge Engine</div>
-      <div class="project-desc">AI-powered "second brain" over saved content from Instagram, LinkedIn, and Gmail. Enables semantic search and intelligent retrieval across personal knowledge sources.</div>
+      <div class="project-desc">AI-powered "second brain" over saved content from Instagram, LinkedIn, and Gmail. Enables semantic search and intelligent retrieval across personal knowledge sources using RAG and Vertex AI embeddings.</div>
       <div class="project-stack">
         <span class="stack-tag">RAG</span><span class="stack-tag">Vertex AI</span>
         <span class="stack-tag">Embeddings</span><span class="stack-tag">Python</span><span class="stack-tag">Gmail API</span>
@@ -799,24 +1371,24 @@
 
     <div class="project-card reveal">
       <div class="project-card-header">
-        <div class="project-icon">📧</div>
-        <div class="project-links"><a href="#">↗ View</a></div>
+        <div class="project-icon">⚡</div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
-      <div class="project-name">Automated Daily Email Digest</div>
-      <div class="project-desc">Automated workflow using Make.com and the Anthropic API to generate intelligent daily email digests, summarising key content and insights from multiple sources.</div>
+      <div class="project-name">Internal Developer Platform</div>
+      <div class="project-desc">Self-service IDP for engineering teams — standardised golden paths for service deployment, automated environment provisioning, and integrated observability on GKE with ArgoCD and Backstage.</div>
       <div class="project-stack">
-        <span class="stack-tag">Make.com</span><span class="stack-tag">Anthropic API</span>
-        <span class="stack-tag">Claude</span><span class="stack-tag">Automation</span>
+        <span class="stack-tag">GKE</span><span class="stack-tag">ArgoCD</span>
+        <span class="stack-tag">Backstage</span><span class="stack-tag">Helm</span><span class="stack-tag">Terraform</span>
       </div>
     </div>
 
     <div class="project-card reveal">
       <div class="project-card-header">
         <div class="project-icon">🏗️</div>
-        <div class="project-links"><a href="#">↗ GitHub</a></div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
       <div class="project-name">Cloudflare IaC Recovery System</div>
-      <div class="project-desc">Terraform-based infrastructure recovery and provisioning system for Cloudflare resources. Migrated to v5 provider schema with Jinja2 template automation for configuration generation.</div>
+      <div class="project-desc">Terraform-based infrastructure recovery and provisioning system for Cloudflare resources. Migrated to v5 provider schema with Jinja2 template automation for configuration generation at scale.</div>
       <div class="project-stack">
         <span class="stack-tag">Terraform</span><span class="stack-tag">Cloudflare</span>
         <span class="stack-tag">Jinja2</span><span class="stack-tag">Python</span><span class="stack-tag">HCL</span>
@@ -826,10 +1398,10 @@
     <div class="project-card reveal">
       <div class="project-card-header">
         <div class="project-icon">📊</div>
-        <div class="project-links"><a href="#">↗ View</a></div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
       <div class="project-name">MLOps Pipeline — Vertex AI</div>
-      <div class="project-desc">End-to-end ML lifecycle pipeline on Vertex AI covering custom training, hyperparameter tuning, model evaluation, registry, deployment to endpoints, and continuous monitoring.</div>
+      <div class="project-desc">End-to-end ML lifecycle pipeline on Vertex AI covering custom training, hyperparameter tuning, model evaluation, registry, endpoint deployment, and continuous monitoring with drift detection.</div>
       <div class="project-stack">
         <span class="stack-tag">Vertex AI</span><span class="stack-tag">Kubeflow Pipelines</span>
         <span class="stack-tag">BigQuery</span><span class="stack-tag">Cloud Build</span>
@@ -838,14 +1410,14 @@
 
     <div class="project-card reveal">
       <div class="project-card-header">
-        <div class="project-icon">⚡</div>
-        <div class="project-links"><a href="#">↗ View</a></div>
+        <div class="project-icon">📧</div>
+        <div class="project-links"><a href="https://github.com/rahulracker7539" target="_blank">↗ GitHub</a></div>
       </div>
-      <div class="project-name">Internal Developer Platform</div>
-      <div class="project-desc">Self-service IDP for engineering teams — standardised golden paths for service deployment, automated environment provisioning, and integrated observability on GKE with ArgoCD and Backstage.</div>
+      <div class="project-name">Automated AI Email Digest</div>
+      <div class="project-desc">Automated workflow using Make.com and the Anthropic API to generate intelligent daily email digests, summarising key content and insights from multiple sources with contextual prioritisation.</div>
       <div class="project-stack">
-        <span class="stack-tag">GKE</span><span class="stack-tag">ArgoCD</span>
-        <span class="stack-tag">Backstage</span><span class="stack-tag">Helm</span><span class="stack-tag">Terraform</span>
+        <span class="stack-tag">Make.com</span><span class="stack-tag">Anthropic API</span>
+        <span class="stack-tag">Claude</span><span class="stack-tag">Automation</span>
       </div>
     </div>
 
@@ -859,7 +1431,6 @@
     <h2>Credentials</h2>
   </div>
   <div class="certs-grid">
-
     <div class="cert-card reveal">
       <div class="cert-icon">🏅</div>
       <div>
@@ -868,7 +1439,6 @@
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
       <div class="cert-icon">🏅</div>
       <div>
@@ -877,7 +1447,6 @@
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
       <div class="cert-icon">🏅</div>
       <div>
@@ -886,7 +1455,6 @@
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
       <div class="cert-icon">🏅</div>
       <div>
@@ -895,25 +1463,22 @@
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
       <div class="cert-icon">🤖</div>
       <div>
-        <div class="cert-name">Google Cloud Certified GenAI Leader</div>
+        <div class="cert-name">Certified GenAI Leader</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
-      <div class="cert-icon">🏅</div>
+      <div class="cert-icon">☸️</div>
       <div>
         <div class="cert-name">Certified Kubernetes Administrator (CKA)</div>
         <div class="cert-issuer">Cloud Native Computing Foundation</div>
       </div>
       <div class="cert-badge active">Active</div>
     </div>
-
     <div class="cert-card reveal">
       <div class="cert-icon">🎯</div>
       <div>
@@ -922,7 +1487,90 @@
       </div>
       <div class="cert-badge progress">In Progress</div>
     </div>
+  </div>
+</section>
 
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">blog</div>
+    <h2>Writing</h2>
+  </div>
+  <div class="blog-grid">
+
+    <div class="blog-card reveal" onclick="openPost('post1')">
+      <div class="blog-card-img"></div>
+      <div class="blog-card-body">
+        <div class="blog-meta">
+          <span class="blog-tag">GCP · Cost</span>
+          <span class="blog-date">Apr 2026</span>
+          <span class="blog-read-time">8 min read</span>
+        </div>
+        <div class="blog-title">How I Cut $15k/Month in GCP Costs Without Killing Performance</div>
+        <div class="blog-excerpt">Real numbers, real techniques. After inheriting 50+ microservices with bloated resource requests, I systematically profiled, right-sized, and restructured our GKE workloads — without a single production incident.</div>
+        <div class="blog-footer">
+          <span class="blog-read-btn">Read article →</span>
+          <span class="blog-author">Rahul Kumar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-card reveal" onclick="openPost('post2')">
+      <div class="blog-card-img" style="background: linear-gradient(90deg, #00aaff, #00ff9d, #7c3aed);"></div>
+      <div class="blog-card-body">
+        <div class="blog-meta">
+          <span class="blog-tag">AI/ML · Agents</span>
+          <span class="blog-date">Mar 2026</span>
+          <span class="blog-read-time">10 min read</span>
+        </div>
+        <div class="blog-title">Google ADK + Gemini Flash 2.5: Building Production AI Agents That Actually Work</div>
+        <div class="blog-excerpt">Most AI agent demos look impressive and fall apart in production. Here's the architecture, the failure modes I hit, and the patterns that held up under real load — with MCP Toolbox and BigQuery in the mix.</div>
+        <div class="blog-footer">
+          <span class="blog-read-btn">Read article →</span>
+          <span class="blog-author">Rahul Kumar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-card reveal" onclick="openPost('post3')">
+      <div class="blog-card-img" style="background: linear-gradient(90deg, #7c3aed, #00ff9d);"></div>
+      <div class="blog-card-body">
+        <div class="blog-meta">
+          <span class="blog-tag">Platform Eng</span>
+          <span class="blog-date">Feb 2026</span>
+          <span class="blog-read-time">12 min read</span>
+        </div>
+        <div class="blog-title">Building an IDP on GKE: The Decisions I Wish Someone Had Warned Me About</div>
+        <div class="blog-excerpt">We built an Internal Developer Platform from scratch for 6 product teams. The tech was the easy part — the org design, the golden path debates, and the resistance from senior engineers nearly derailed it.</div>
+        <div class="blog-footer">
+          <span class="blog-read-btn">Read article →</span>
+          <span class="blog-author">Rahul Kumar</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter" style="padding: 100px 5vw;">
+  <div class="newsletter-inner reveal">
+    <div class="newsletter-eyebrow">newsletter</div>
+    <div class="newsletter-title">Cloud &amp; AI Insights.<br>No fluff. Bi-weekly.</div>
+    <p class="newsletter-sub">
+      Practical deep-dives on GCP, Platform Engineering, and AI/ML — written by a practitioner who ships real systems. Join engineers and tech leads who want signal, not noise.
+    </p>
+    <div class="newsletter-features">
+      <span class="nl-feature">Real-world GCP patterns</span>
+      <span class="nl-feature">AI/ML engineering</span>
+      <span class="nl-feature">Platform Engineering</span>
+      <span class="nl-feature">Free forever</span>
+    </div>
+    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/kumarcodes" method="post" target="_blank" onsubmit="handleNewsletterSubmit(event)">
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required>
+      <button type="submit" class="newsletter-btn">&#x25B6; Subscribe</button>
+    </form>
+    <div class="newsletter-note">No spam. Unsubscribe anytime. ~500 engineers already in.</div>
   </div>
 </section>
 
@@ -934,24 +1582,28 @@
   </div>
   <div class="contact-grid reveal">
     <div class="contact-text">
-      <h3>Let's build something together.</h3>
-      <p>I'm open to senior DevOps, Platform Engineering, and AI/ML Engineer roles, as well as consulting engagements and interesting collaborations. Based in London — remote or hybrid.</p>
+      <h3>Let's build something great.</h3>
+      <p>Open to senior Platform Engineering, DevOps, and AI/ML Engineer roles — as well as consulting engagements and interesting collaborations. Based in London, available remote or hybrid.</p>
       <div class="contact-links">
-        <a href="mailto:rahul@kumarcodes.dev" class="contact-link">
+        <a href="mailto:imrahul180@gmail.com" class="contact-link">
           <span class="contact-link-icon">✉</span>
-          rahul@kumarcodes.dev
+          <span class="contact-link-label">imrahul180@gmail.com</span>
+          <span class="contact-link-arrow">→</span>
         </a>
         <a href="https://linkedin.com/in/rahulkumar180" target="_blank" class="contact-link">
           <span class="contact-link-icon">in</span>
-          linkedin.com/in/rahulkumar180
+          <span class="contact-link-label">linkedin.com/in/rahulkumar180</span>
+          <span class="contact-link-arrow">→</span>
         </a>
         <a href="https://github.com/rahulracker7539" target="_blank" class="contact-link">
           <span class="contact-link-icon">⌥</span>
-          github.com/rahulracker7539
+          <span class="contact-link-label">github.com/rahulracker7539</span>
+          <span class="contact-link-arrow">→</span>
         </a>
-        <a href="#" class="contact-link">
+        <a href="cv-rahul-kumar.pdf" download class="contact-link">
           <span class="contact-link-icon">📄</span>
-          Download Resume
+          <span class="contact-link-label">Download Resume (PDF)</span>
+          <span class="contact-link-arrow">↓</span>
         </a>
       </div>
     </div>
@@ -960,20 +1612,23 @@
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
         <span class="terminal-bar-title">new_message.sh</span>
       </div>
-      <div class="form-body">
+      <div class="form-body" id="contact-form-body">
         <div class="form-group">
           <label class="form-label">// your name</label>
-          <input type="text" class="form-input" placeholder="John Smith">
+          <input type="text" class="form-input" id="f-name" placeholder="John Smith">
         </div>
         <div class="form-group">
           <label class="form-label">// email</label>
-          <input type="email" class="form-input" placeholder="john@company.com">
+          <input type="email" class="form-input" id="f-email" placeholder="john@company.com">
         </div>
         <div class="form-group">
           <label class="form-label">// message</label>
-          <textarea class="form-textarea" placeholder="Hey Rahul, I'd love to chat about..."></textarea>
+          <textarea class="form-textarea" id="f-msg" placeholder="Hey Rahul, I'd love to chat about..."></textarea>
         </div>
-        <button class="form-submit">&#x25B6; SEND_MESSAGE()</button>
+        <button class="form-submit" onclick="submitForm()">&#x25B6; SEND_MESSAGE()</button>
+      </div>
+      <div class="form-success" id="form-success">
+        ✓ Message sent! I'll get back to you soon.
       </div>
     </div>
   </div>
@@ -981,20 +1636,257 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2026 Rahul Kumar · <span style="color:var(--green)">kumarcodes.dev</span></div>
-  <div class="footer-made">Built with <span>&#x2665;</span> & too much coffee.</div>
+  <div class="footer-copy">© 2026 <a href="https://kumarcodes.dev">Rahul Kumar</a> · London, UK 🇬🇧</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/rahulkumar180" target="_blank">LinkedIn</a>
+    <a href="https://github.com/rahulracker7539" target="_blank">GitHub</a>
+    <a href="cv-rahul-kumar.pdf" download>Resume</a>
+    <a href="mailto:imrahul180@gmail.com">Email</a>
+  </div>
+  <div class="footer-made">Built with <span>♥</span> &amp; too much coffee.</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<!-- BACK TO TOP -->
+<a href="#hero" id="back-to-top" aria-label="Back to top">↑</a>
 
-  // Form submit
-  document.querySelector('.form-submit').addEventListener('click', function
+<!-- BLOG MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleModalClick(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-header">
+      <div class="modal-meta" id="modal-meta"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closePost()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   BLOG POSTS DATA
+============================================================ */
+const posts = {
+  post1: {
+    title: "How I Cut $15k/Month in GCP Costs Without Killing Performance",
+    tag: "GCP · Cost Optimisation",
+    date: "Apr 2026",
+    readTime: "8 min read",
+    body: `
+      <p>When I joined Rackspace's platform team, I inherited a Kubernetes estate with 50+ microservices across GCP. Within the first two weeks, I noticed something uncomfortable: our monthly cloud compute bill was consistently above $60k, and nobody could tell me why.</p>
+      <p>Six months later, we were running the same workloads for $45k/month — a <span class="highlight">25% reduction, $15k/month saved</span>. Here's exactly how we did it.</p>
+      <h3>The Problem: Requests vs. Actual Usage</h3>
+      <p>The root cause was almost always the same: teams had set resource requests and limits conservatively (sometimes copied from Stack Overflow) and never revisited them. A service requesting 2 CPU cores and 4Gi RAM but using 200m CPU on average was effectively burning money.</p>
+      <p>GKE bills on <strong>reserved resources, not actual usage</strong>. That's the key insight. Kubernetes uses requests for scheduling decisions — meaning every node pays for what's requested, regardless of what actually runs.</p>
+      <h3>Step 1: Establish a Baseline with Prometheus</h3>
+      <p>Before touching anything, I needed data. We already had Prometheus and Grafana in place, so I pulled 30-day P95 CPU and memory metrics per container across all namespaces:</p>
+      <pre><code>// PromQL: P95 CPU usage per container over 30d
+quantile_over_time(0.95,
+  rate(container_cpu_usage_seconds_total[5m])[30d:5m]
+)</code></pre>
+      <p>The results were illuminating. Most services were running at <span class="highlight">10–20% of their requested CPU</span>. Memory was better but still padded by 2–3×.</p>
+      <h3>Step 2: Right-Sizing with a Safety Margin</h3>
+      <p>The formula I used for new requests:</p>
+      <ul>
+        <li>CPU request = P95 usage × 1.3 (30% headroom)</li>
+        <li>Memory request = P99 usage × 1.5 (more headroom — OOMKills are brutal)</li>
+        <li>CPU limit = 2× CPU request (allow bursting)</li>
+        <li>Memory limit = Memory request (never let this grow silently)</li>
+      </ul>
+      <p>We rolled these out gradually — one namespace at a time, with SLO dashboards open during each change. The key was <strong>not touching limits and requests simultaneously</strong>, so any regression was clearly attributable.</p>
+      <h3>Step 3: Node Pool Rationalisation</h3>
+      <p>We were running three node pools with different machine types — some historical, some chosen for specific workloads that had since been retired. We consolidated to two pools: a standard <code>n2-standard-4</code> pool for general workloads and a <code>n2-highmem-4</code> pool for memory-intensive services.</p>
+      <p>This alone saved around $3k/month by eliminating underutilised node capacity that couldn't be scheduled efficiently.</p>
+      <h3>Step 4: Committed Use Discounts</h3>
+      <p>Once our usage stabilised post-right-sizing, we purchased 1-year Committed Use Discounts (CUDs) for our baseline capacity. CUDs on GCP give you <strong>~37% discount on compute</strong> for committing to a certain amount of vCPUs and memory.</p>
+      <blockquote>The mistake most teams make is buying CUDs before right-sizing. You end up committing to a bloated baseline. Always optimise first, then commit.</blockquote>
+      <h3>Results</h3>
+      <p>After six months: $15k/month saved, zero production incidents attributable to resource changes, and a team that now treats cost as a first-class engineering metric — tracked on the same dashboard as latency and error rate.</p>
+      <p>The biggest lesson: <strong>cloud cost is an engineering problem, not a finance problem</strong>. The moment you treat it as such, the answers become obvious.</p>
+    `
+  },
+  post2: {
+    title: "Google ADK + Gemini Flash 2.5: Building Production AI Agents That Actually Work",
+    tag: "AI/ML · Agents",
+    date: "Mar 2026",
+    readTime: "10 min read",
+    body: `
+      <p>I've been building with AI agents for the past year — and the gap between "impressive demo" and "production-grade system" is enormous. Most agent frameworks make the demo easy and the production deployment a nightmare. Here's what I've learned shipping agents with Google ADK and Gemini Flash 2.5.</p>
+      <h3>Why Google ADK?</h3>
+      <p>I evaluated several frameworks — LangChain, LlamaIndex, CrewAI — before landing on Google's Agent Development Kit. The deciding factors were:</p>
+      <ul>
+        <li>Native Vertex AI integration — no custom connectors to maintain</li>
+        <li>First-class MCP (Model Context Protocol) Toolbox support</li>
+        <li>Better token management with large tool sets (the problem nobody talks about)</li>
+        <li>Streaming support that works correctly under load</li>
+      </ul>
+      <h3>The Token Problem Nobody Tells You About</h3>
+      <p>Here's the thing about building agents with large tool sets: <strong>every tool definition consumes tokens</strong>. If you have 40 tools registered and each schema averages 300 tokens, you're burning 12,000 tokens per call — before the user's message even lands.</p>
+      <p>With Gemini Flash 2.5, we hit context window limits at around 60 tools. The solution: <strong>dynamic tool loading via MCP Toolbox</strong>. Instead of registering all tools upfront, we implemented a router agent that classifies the intent and loads only the relevant tool subset.</p>
+      <pre><code>// Simplified routing pattern
+router_agent → classify_intent(query)
+             → load_tool_subset(intent_category)
+             → spawn_specialist_agent(tools, query)</code></pre>
+      <p>This cut our average token usage per request by <span class="highlight">68%</span> and made the system viable at scale.</p>
+      <h3>BigQuery as the Agent's Memory</h3>
+      <p>One pattern I'm particularly happy with: using BigQuery as a structured long-term memory store for agents. Rather than vector databases for everything, structured data benefits from SQL's precision.</p>
+      <p>The agent writes structured observations to BigQuery after each session. On subsequent calls, it retrieves relevant context via templated queries — giving it genuine continuity without hallucinating history.</p>
+      <h3>Failure Modes I Hit in Production</h3>
+      <ul>
+        <li><strong>Tool call loops:</strong> Agents occasionally get stuck calling the same tool repeatedly. Fixed with a call counter and circuit breaker per tool per session.</li>
+        <li><strong>Schema drift:</strong> Tool schemas changed without the agent knowing. Fixed with schema versioning and validation at agent startup.</li>
+        <li><strong>Prompt injection via tool results:</strong> External data sources can contain instructions. Fixed with a sanitisation layer on all tool outputs before they reach the model.</li>
+      </ul>
+      <h3>What Gemini Flash 2.5 Gets Right</h3>
+      <p>Flash 2.5 is genuinely fast and the tool-use quality is solid. The multimodal capabilities are a bonus — we use it to process screenshots of dashboards as part of an incident response agent. The cost per token is low enough to make high-throughput agentic workloads economically sensible.</p>
+      <blockquote>The best model is the one your team can iterate on quickly. Flash 2.5's speed makes the debug loop fast — that matters more than benchmark scores in real development.</blockquote>
+      <p>More posts on specific patterns coming. If you're building agents on GCP and want to compare notes, find me on LinkedIn.</p>
+    `
+  },
+  post3: {
+    title: "Building an IDP on GKE: The Decisions I Wish Someone Had Warned Me About",
+    tag: "Platform Engineering",
+    date: "Feb 2026",
+    readTime: "12 min read",
+    body: `
+      <p>Building an Internal Developer Platform sounds like a solved problem in 2026. Backstage exists. ArgoCD exists. Crossplane exists. The toolchain is there. What nobody tells you is that the toolchain is the easy part — <strong>the hard part is organisational</strong>.</p>
+      <p>We built an IDP for 6 product teams at Rackspace. Here's what I wish I'd known before starting.</p>
+      <h3>Decision 1: What is a "Golden Path" Actually?</h3>
+      <p>The first six weeks were consumed by a debate I didn't anticipate: what does a "golden path" mean for us? Is it opinionated defaults that teams can override? Is it a locked-down template? Is it just good documentation?</p>
+      <p>We landed on this definition: <strong>a golden path is the path of least resistance to doing the right thing</strong>. It doesn't prevent deviation — it makes deviation conscious and visible.</p>
+      <p>In practice this meant: a service scaffold CLI that generates a repo with sensible defaults (Dockerfile, Helm chart, GitHub Actions pipeline, Prometheus annotations), plus clear documentation on what to change and why.</p>
+      <h3>Decision 2: Backstage or Not?</h3>
+      <p>We spent three weeks evaluating Backstage. The plugin ecosystem is impressive. The developer portal is exactly what teams say they want. We ultimately <strong>didn't adopt it</strong>, for three reasons:</p>
+      <ul>
+        <li>Maintenance overhead is real — Backstage is a React app and requires frontend engineering investment most platform teams don't have</li>
+        <li>Our teams lived in GitHub and Slack, not a portal — adoption risk was high</li>
+        <li>The value prop was unclear for small-to-medium scale (6 teams)</li>
+      </ul>
+      <p>Instead we built a lightweight service catalogue in Notion with a YAML-driven source of truth in git. Not glamorous, but our adoption rate was near 100% because it was where people already worked.</p>
+      <h3>Decision 3: Self-Service vs. Ticket-Driven</h3>
+      <p>The whole point of an IDP is self-service. But self-service without guardrails is chaos. We introduced three tiers:</p>
+      <ul>
+        <li><strong>Tier 1 — Instant:</strong> Environment creation, namespace provisioning, scaling — fully automated, no approval required</li>
+        <li><strong>Tier 2 — Automated with notification:</strong> New GCP service accounts, firewall rules — automated but platform team is notified</li>
+        <li><strong>Tier 3 — Async approval:</strong> Production database changes, VPC peering, cross-project access — PR-based approval, platform team reviews within 24h</li>
+      </ul>
+      <p>This model reduced platform team toil by roughly 70% while keeping security controls intact.</p>
+      <h3>The Org Challenge: The Senior Engineers</h3>
+      <p>Here's the thing nobody writes about: <strong>the resistance from senior engineers is real and legitimate</strong>. The best engineers in your product teams have opinions about how infrastructure should work. An IDP that hides complexity from them feels like a demotion.</p>
+      <p>The fix: make the IDP an accelerator, not a black box. Publish all the Terraform modules. Make the golden path opinionated but fully inspectable. Treat senior engineers as the IDP's power users, not its adversaries.</p>
+      <p>Two of our most skeptical engineers eventually became the IDP's biggest advocates — once they realised they could move faster using it than working around it.</p>
+      <h3>What Actually Mattered After 18 Months</h3>
+      <p>The metrics that proved the IDP's value: environment provisioning from 3 days to 15 minutes; platform team support tickets down 60%; time to first deployment for new services from 2 weeks to 2 days.</p>
+      <blockquote>Platform engineering is product engineering. Your customers are developers. Build with the same rigour you'd expect for user-facing products — user research, feedback loops, deprecation policies. Treat it like a side project and it'll become a liability.</blockquote>
+      <p>Happy to go deeper on any specific area — Terraform module design, the ArgoCD app-of-apps pattern, or SLO implementation. Reach out on LinkedIn or drop me a message.</p>
+    `
+  }
+};
+
+/* ============================================================
+   MODAL
+============================================================ */
+function openPost(id) {
+  const post = posts[id];
+  if (!post) return;
+  document.getElementById('modal-meta').innerHTML =
+    `<span class="blog-tag">${post.tag}</span><span class="blog-date">${post.date}</span><span class="blog-read-time">${post.readTime}</span>`;
+  document.getElementById('modal-title').textContent = post.title;
+  document.getElementById('modal-body').innerHTML = post.body;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePost() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleModalClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closePost();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePost(); });
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ============================================================
+   SCROLL PROGRESS + BACK TO TOP + ACTIVE NAV
+============================================================ */
+const progressBar = document.getElementById('progress-bar');
+const backToTop = document.getElementById('back-to-top');
+const navLinks = document.querySelectorAll('.nav-links a:not(.nav-resume)');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+
+  // Back to top
+  if (scrollTop > 500) backToTop.classList.add('visible');
+  else backToTop.classList.remove('visible');
+
+  // Active nav link
+  let current = '';
+  sections.forEach(sec => {
+    if (scrollTop >= sec.offsetTop - 120) current = sec.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+}, { passive: true });
+
+/* ============================================================
+   HAMBURGER MENU
+============================================================ */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+/* ============================================================
+   CONTACT FORM
+============================================================ */
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg = document.getElementById('f-msg').value.trim();
+  if (!name || !email || !msg) { alert('Please fill in all fields.'); return; }
+  const mailto = `mailto:imrahul180@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + '\n\nFrom: ' + email)}`;
+  window.location.href = mailto;
+  document.getElementById('contact-form-body').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+/* ============================================================
+   NEWSLETTER FORM
+============================================================ */
+function handleNewsletterSubmit(e) {
+  // Let the form submit to Buttondown naturally (opens in new tab)
+  // Show a local confirmation message
+  setTimeout(() => {
+    const btn = document.querySelector('.newsletter-btn');
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = 'var(--green2)';
+    btn.disabled = true;
+  }, 500);
+}
+</script>
+
+</body>
+</html>
