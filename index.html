@@ -17,28 +17,29 @@
 <link rel="canonical" href="https://kumarcodes.dev">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    VARIABLES & RESET
 ============================================================ */
 :root {
-  --bg:      #0a0c0f;
-  --bg2:     #0f1218;
-  --bg3:     #141820;
-  --bg4:     #1a1f2e;
-  --border:  rgba(0,255,157,0.10);
-  --border2: rgba(0,255,157,0.22);
-  --green:   #00ff9d;
-  --green2:  #00cc7a;
-  --green3:  rgba(0,255,157,0.07);
-  --green4:  rgba(0,255,157,0.15);
-  --text:    #e2e8f0;
-  --muted:   #8892a4;
-  --dim:     #4a5568;
+  --bg:      #0d0d12;
+  --bg2:     #12121a;
+  --bg3:     #18182a;
+  --bg4:     #22223a;
+  --border:  rgba(139,92,246,0.13);
+  --border2: rgba(139,92,246,0.32);
+  --green:   #8b5cf6;
+  --green2:  #a78bfa;
+  --green3:  rgba(139,92,246,0.07);
+  --green4:  rgba(139,92,246,0.16);
+  --text:    #f0eeff;
+  --muted:   #9190a8;
+  --dim:     #4d4d72;
   --mono:    'JetBrains Mono', monospace;
+  --inter:   'Inter', sans-serif;
   --sans:    'Syne', sans-serif;
-  --radius:  8px;
+  --radius:  14px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -51,13 +52,15 @@ body {
   overflow-x: hidden;
 }
 
-/* SCANLINE */
+/* NOISE OVERLAY */
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,157,0.010) 2px, rgba(0,255,157,0.010) 4px);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
   pointer-events: none;
   z-index: 9999;
+  opacity: 0.4;
 }
 
 /* SCROLL PROGRESS BAR */
@@ -214,8 +217,8 @@ section {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
 }
@@ -225,7 +228,7 @@ section {
   position: absolute;
   top: 15%; right: -5%;
   width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(0,255,157,0.05) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -310,7 +313,7 @@ h1 .name-accent { color: var(--green); }
 }
 .btn-primary {
   background: var(--green);
-  color: #000;
+  color: #fff;
   border: 1px solid var(--green);
   font-weight: 700;
 }
@@ -421,7 +424,7 @@ h2 {
 .tl { display: block; margin-bottom: 5px; line-height: 1.6; }
 .tl .p  { color: var(--green); }
 .tl .c  { color: var(--dim); }
-.tl .v  { color: #79c0ff; }
+.tl .v  { color: #c4b5fd; }
 .tl .s  { color: #ffd080; }
 .tl .arr{ color: var(--muted); }
 .tl .k  { color: var(--green2); }
@@ -472,7 +475,7 @@ h2 {
   letter-spacing: 0.04em;
   transition: all 0.15s;
 }
-.skill-card:hover .tag { border-color: rgba(0,255,157,0.22); color: var(--green2); }
+.skill-card:hover .tag { border-color: rgba(139,92,246,0.40); color: var(--green2); }
 
 /* ============================================================
    EXPERIENCE
@@ -567,10 +570,10 @@ h2 {
 .stack-tag {
   font-size: 10px;
   color: var(--green2);
-  border: 1px solid rgba(0,204,122,0.22);
+  border: 1px solid rgba(139,92,246,0.28);
   padding: 2px 9px;
-  border-radius: 3px;
-  background: rgba(0,204,122,0.05);
+  border-radius: 4px;
+  background: rgba(139,92,246,0.08);
 }
 
 /* ============================================================
@@ -604,7 +607,7 @@ h2 {
   align-self: flex-start;
   white-space: nowrap;
 }
-.cert-badge.active { background: rgba(0,255,157,0.08); color: var(--green2); border: 1px solid rgba(0,255,157,0.2); }
+.cert-badge.active { background: rgba(139,92,246,0.10); color: var(--green2); border: 1px solid rgba(139,92,246,0.28); }
 .cert-badge.progress { background: rgba(255,208,128,0.08); color: #ffd080; border: 1px solid rgba(255,208,128,0.2); }
 
 /* ============================================================
@@ -632,8 +635,8 @@ h2 {
   box-shadow: 0 20px 48px rgba(0,0,0,0.35);
 }
 .blog-card-img {
-  height: 5px;
-  background: linear-gradient(90deg, var(--green), var(--green2), #00aaff);
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, var(--green), var(--green2));
 }
 .blog-card-body { padding: 26px; display: flex; flex-direction: column; flex: 1; }
 .blog-meta {
@@ -819,7 +822,7 @@ h2 {
 #newsletter {
   padding: 80px 5vw;
   max-width: 100%;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,255,157,0.02) 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(139,92,246,0.03) 50%, transparent 100%);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -877,7 +880,7 @@ h2 {
 .newsletter-input::placeholder { color: var(--dim); }
 .newsletter-btn {
   background: var(--green);
-  color: #000;
+  color: #fff;
   border: none;
   border-radius: 4px;
   padding: 13px 24px;
@@ -979,7 +982,7 @@ h2 {
 .form-submit {
   width: 100%;
   background: var(--green);
-  color: #000;
+  color: #fff;
   border: none;
   border-radius: 4px;
   padding: 13px;
@@ -1083,6 +1086,75 @@ footer {
   h1 { font-size: 44px; }
   .projects-grid, .blog-grid { grid-template-columns: 1fr; }
   .certs-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   INTER — READING SECTIONS
+============================================================ */
+.about-text p,
+.exp-desc,
+.exp-desc li,
+.project-desc,
+.blog-excerpt,
+.contact-text p,
+.modal-body,
+.modal-body p {
+  font-family: var(--inter);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   GLASSMORPHISM CARDS
+============================================================ */
+.skill-card,
+.project-card,
+.cert-card,
+.blog-card {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.skill-card:hover {
+  box-shadow: 0 16px 48px rgba(139,92,246,0.18), 0 0 0 1px rgba(139,92,246,0.15);
+}
+.project-card:hover {
+  box-shadow: 0 20px 56px rgba(139,92,246,0.18), 0 0 0 1px rgba(139,92,246,0.15);
+}
+.blog-card:hover {
+  box-shadow: 0 20px 56px rgba(139,92,246,0.16), 0 0 0 1px rgba(139,92,246,0.12);
+}
+
+/* ============================================================
+   CERT CARD AS LINK
+============================================================ */
+a.cert-card {
+  text-decoration: none;
+  cursor: pointer;
+}
+a.cert-card:hover .cert-name { color: var(--green2); }
+a.cert-card:hover {
+  box-shadow: 0 12px 36px rgba(139,92,246,0.18), 0 0 0 1px rgba(139,92,246,0.20);
+}
+
+/* ============================================================
+   REFINED SECTION EYEBROW
+============================================================ */
+.section-eyebrow::before { content: '◆'; color: var(--green); font-size: 8px; }
+
+/* ============================================================
+   GRADIENT BORDER HERO STATS
+============================================================ */
+.hero-stats {
+  border-top: 1px solid;
+  border-image: linear-gradient(90deg, var(--green), transparent) 1;
+}
+
+/* ============================================================
+   BLOG TAG — PURPLE
+============================================================ */
+.blog-tag {
+  border: 1px solid rgba(139,92,246,0.30);
+  color: var(--green2);
+  background: rgba(139,92,246,0.08);
 }
 </style>
 </head>
@@ -1431,62 +1503,56 @@ footer {
     <h2>Credentials</h2>
   </div>
   <div class="certs-grid">
-    <div class="cert-card reveal">
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/cloud-architect" target="_blank" rel="noopener">
       <div class="cert-icon">🏅</div>
       <div>
         <div class="cert-name">Professional Cloud Architect</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/cloud-devops-engineer" target="_blank" rel="noopener">
       <div class="cert-icon">🏅</div>
       <div>
         <div class="cert-name">Professional Cloud DevOps Engineer</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/cloud-security-engineer" target="_blank" rel="noopener">
       <div class="cert-icon">🏅</div>
       <div>
         <div class="cert-name">Professional Cloud Security Engineer</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/cloud-developer" target="_blank" rel="noopener">
       <div class="cert-icon">🏅</div>
       <div>
         <div class="cert-name">Professional Cloud Developer</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/generative-ai-leader" target="_blank" rel="noopener">
       <div class="cert-icon">🤖</div>
       <div>
         <div class="cert-name">Certified GenAI Leader</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://www.cncf.io/certification/cka/" target="_blank" rel="noopener">
       <div class="cert-icon">☸️</div>
       <div>
         <div class="cert-name">Certified Kubernetes Administrator (CKA)</div>
         <div class="cert-issuer">Cloud Native Computing Foundation</div>
       </div>
-      <div class="cert-badge active">Active</div>
-    </div>
-    <div class="cert-card reveal">
+    </a>
+    <a class="cert-card reveal" href="https://cloud.google.com/learn/certification/machine-learning-engineer" target="_blank" rel="noopener">
       <div class="cert-icon">🎯</div>
       <div>
         <div class="cert-name">Professional ML Engineer</div>
         <div class="cert-issuer">Google Cloud Platform</div>
       </div>
       <div class="cert-badge progress">In Progress</div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -1516,7 +1582,7 @@ footer {
     </div>
 
     <div class="blog-card reveal" onclick="openPost('post2')">
-      <div class="blog-card-img" style="background: linear-gradient(90deg, #00aaff, #00ff9d, #7c3aed);"></div>
+      <div class="blog-card-img" style="background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);"></div>
       <div class="blog-card-body">
         <div class="blog-meta">
           <span class="blog-tag">AI/ML · Agents</span>
@@ -1533,7 +1599,7 @@ footer {
     </div>
 
     <div class="blog-card reveal" onclick="openPost('post3')">
-      <div class="blog-card-img" style="background: linear-gradient(90deg, #7c3aed, #00ff9d);"></div>
+      <div class="blog-card-img" style="background: linear-gradient(90deg, #7c3aed, #8b5cf6);"></div>
       <div class="blog-card-body">
         <div class="blog-meta">
           <span class="blog-tag">Platform Eng</span>
